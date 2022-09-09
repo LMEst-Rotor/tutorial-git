@@ -48,6 +48,8 @@ class BeamEB:
         
         self.n_DOF = self.n_gdl * self.n_nos
 
+        self.done = False
+
         self.matrices = self.mountMatrices()
 
     def mountMatrices(self):
@@ -144,7 +146,7 @@ class BeamEB:
 
         return self.rho*self.A*M
 
-    def runVibrationModes(self, plot=True):
+    def runVibrationModes(self):
         """Executes the calculus to find the vibration modes of the beam.
 
         Paramters
@@ -175,18 +177,11 @@ class BeamEB:
 
         modo = self.solveProblem(KK,MM)
 
-        if plot:
-            
-            fig = go.Figure()
-            qtd_modos = 5
-
-            Lo = np.arange(0,self.L,self.L_ef)
-
-            for mode in range(qtd_modos):
-                fig.add_trace(go.Scatter(x=Lo,y=modo[:,mode],name=f"{mode + 1} modo de vibrar"))
-
-            fig.show()
+        self.done = True
+        self.modo = modo
         
+        print("\n Modos de Vibrar calculados! \n")
+
         return modo
 
     def solveProblem(self,KK,MM):
@@ -213,3 +208,9 @@ class BeamEB:
         modo = modo/modo[-1]
 
         return modo
+
+
+if __name__ == '__main__':
+
+    viga1 = BeamEB(0.35,0.02,0.06,7e10,2780,100)
+    modo = viga1.runVibrationModes()

@@ -209,7 +209,21 @@ class BeamEB:
 
         return modo
 
+    def plot(self, qtd_modos=5):
 
+        if self.done:
+            
+            fig = go.Figure()
+
+            Lo = np.arange(0,self.L,self.L_ef)
+
+            for mode in range(qtd_modos):
+                fig.add_trace(go.Scatter(x=Lo,y=self.modo[:,mode],name=f"{mode + 1} modo de vibrar", showlegend=True))
+
+            fig.update_layout(title="Viga de Euler-Bernoulli e seus modos de vibrar")
+            fig.show()
+        else:
+            raise Exception("You need to run the vibration modes before plotting!")
 if __name__ == '__main__':
 
     viga1 = BeamEB(0.35,0.02,0.06,7e10,2780,100)

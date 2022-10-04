@@ -223,6 +223,7 @@ class BeamEB:
             fig.update_layout(title="Viga de Euler-Bernoulli e seus modos de vibrar")
             fig.show()
         else:
+            
             raise Exception("You need to run the vibration modes before plotting!")
 
 if __name__ == '__main__':
